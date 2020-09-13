@@ -19,11 +19,11 @@ class Student < InteractiveRecord
     column_names.compact
   end 
   
- def initialize(options={})
+  def initialize(options={})
     options.each do |property, value|
       self.send("#{property}=", value)
-    end
   end
+end
   
   self.column_names.each do |col_name|
     attr_accessor col_name.to_sym
@@ -35,13 +35,13 @@ class Student < InteractiveRecord
   
   def col_names_for_insert
     self.class.column_names.delete_if {|col| col == "id"}.join(", ")
-end 
+  end 
 
-def values_for_insert
+  def values_for_insert
     values = []
     self.class.column_names.each do |col_name|
       values << "'#{send(col_name)}'" unless send(col_name).nil?
-    end
+  end
     values.join(", ")
   end
   
